@@ -37,21 +37,18 @@ alaNumericConversions.scala:113)
 ## Checking at compile time
 
 ```
-$ cat Attempt1Annotated.scala
+$ diff -u Attempt1{,Annotated}.scala
 ```
 
-```scala
-import annotation.tailrec
-
-object Attempt1Annotated {
-  @tailrec
-  def factorial(n: BigInt): BigInt = {
-    if (n == 0) 1 else n * factorial(n - 1)
-  }
-  def main(args: Array[String]) {
-    println(factorial(10000))
-  }
-}
+```diff
+--- Attempt1.scala	2016-05-11 20:42:17.000000000 +1000
++++ Attempt1Annotated.scala	2016-05-11 21:01:17.000000000 +1000
+@@ -1,4 +1,5 @@
+ object Attempt1 {
++  @annotation.tailrec
+   def factorial(n: BigInt): BigInt = {
+     if (n == 0) 1 else n * factorial(n - 1)
+   }
 ```
 
 ```
@@ -59,9 +56,9 @@ $ scala Attempt1Annotated.scala 2>&1 | fold | head
 ```
 
 ```
-/Users/cbrookin/Desktop/scala/tailrec/Attempt1Annotated.scala:6: error: could no
-t optimize @tailrec annotated method factorial: it contains a recursive call not
- in tail position
+/Users/cbrookin/Documents/code/scala-notes/tailrec/Attempt1Annotated.scala:4: er
+ror: could not optimize @tailrec annotated method factorial: it contains a recur
+sive call not in tail position
     if (n == 0) 1 else n * factorial(n - 1)
                          ^
 one error found
@@ -114,13 +111,13 @@ $ scala -g:notailcalls Attempt2.scala 2>&1 | fold | head
 
 ```
 java.lang.StackOverflowError
-	at scala.math.BigInt$.int2bigInt(BigInt.scala:97)
-	at scala.math.BigInt.isValidInt(BigInt.scala:130)
-	at scala.math.ScalaNumericAnyConversions$class.unifiedPrimitiveEquals(Sc
-alaNumericConversions.scala:113)
-	at scala.math.BigInt.unifiedPrimitiveEquals(BigInt.scala:112)
+	at scala.math.BigInt$.long2bigInt(BigInt.scala:101)
+	at scala.math.BigInt.isValidLong(BigInt.scala:131)
 	at scala.math.BigInt.equals(BigInt.scala:125)
 	at scala.runtime.BoxesRunTime.equalsNumNum(BoxesRunTime.java:168)
 	at scala.runtime.BoxesRunTime.equalsNumObject(BoxesRunTime.java:140)
+	at Main$.factorialRecurse$1(Attempt2.scala:7)
+	at Main$.factorialRecurse$1(Attempt2.scala:7)
+	at Main$.factorialRecurse$1(Attempt2.scala:7)
 	at Main$.factorialRecurse$1(Attempt2.scala:7)
 ```

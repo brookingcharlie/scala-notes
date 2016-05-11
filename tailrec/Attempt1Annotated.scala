@@ -1,7 +1,5 @@
-import annotation.tailrec
-
-object Attempt1Annotated {
-  @tailrec
+object Attempt1 {
+  @annotation.tailrec
   def factorial(n: BigInt): BigInt = {
     if (n == 0) 1 else n * factorial(n - 1)
   }

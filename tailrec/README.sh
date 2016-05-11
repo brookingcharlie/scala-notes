@@ -20,7 +20,7 @@ show_cmd 'scala Attempt1.scala 2>&1 | fold | head'
 echo
 echo '## Checking at compile time'
 echo
-show_cmd 'cat Attempt1Annotated.scala' scala
+show_cmd 'diff -u Attempt1{,Annotated}.scala' diff
 echo
 show_cmd 'scala Attempt1Annotated.scala 2>&1 | fold | head'
 echo
