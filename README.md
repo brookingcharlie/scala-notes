@@ -2,3 +2,4 @@
 
 * [Higher-order functions](hof/)
 * [Tail call optimisation](tailrec/)
+* [Folding](fold/)
