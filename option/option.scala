@@ -50,39 +50,33 @@ assert(None.filter(h) == None)
 
 // Implement our own versions of Option functions
 
-def map[A, B](as: Option[A])(f: A => B): Option[B] = as match {
+def map[X, Y](xs: Option[X])(f: X => Y): Option[Y] = xs match {
+  case Some(x) => Some(f(x))
   case None => None
-  case Some(a) => Some(f(a))
 }
 assert(map(Some(1))(f) == Some(2))
 assert(map(None)(f) == None)
 
-def flatMap[A, B](as: Option[A])(f: A => Option[B]): Option[B] = as match {
-  case None => None
-  case Some(a) => f(a)
-}
-assert(flatMap(Some(1))(g) == Some(2))
-assert(flatMap(Some(-1))(g) == None)
-assert(flatMap(None)(g) == None)
-
-def getOrElse[A](as: Option[A])(z: A): A = as match {
+def getOrElse[X, Z >: X](xs: Option[X])(z: => Z): Z = xs match {
+  case Some(x) => x
   case None => z
-  case Some(a) => a
 }
 assert(getOrElse(Some(1))(0) == 1)
 assert(getOrElse(None)(0) == 0)
 
-def orElse[A](as: Option[A])(zs: Option[A]): Option[A] = as match {
-  case None => zs
-  case as@Some(a) => as
-}
+def flatMap[X, Y](xs: Option[X])(f: X => Option[Y]): Option[Y] =
+  getOrElse(map(xs)(f))(None)
+assert(flatMap(Some(1))(g) == Some(2))
+assert(flatMap(Some(-1))(g) == None)
+assert(flatMap(None)(g) == None)
+
+def orElse[X, Z >: X](xs: Option[X])(zs: => Option[Z]): Option[Z] =
+  getOrElse(map(xs)(x => Some(x): Option[Z]))(zs)
 assert(orElse(Some(1))(Some(0)) == Some(1))
 assert(orElse(None)(Some(0)) == Some(0))
 
-def filter[A](as: Option[A])(p: A => Boolean): Option[A] = as match {
-  case None => None
-  case as@Some(a) => if (p(a)) as else None
-}
+def filter[X](xs: Option[X])(p: X => Boolean): Option[X] =
+  flatMap(xs)(x => if (p(x)) Some(x) else None)
 assert(filter(Some(1))(h) == Some(1))
 assert(filter(Some(-1))(h) == None)
 assert(filter(None)(h) == None)
