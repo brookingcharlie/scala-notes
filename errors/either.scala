@@ -22,3 +22,17 @@ assert(div(2, 0) match {
   case Left(e) => e.isInstanceOf[java.lang.ArithmeticException]
   case _ => false
 })
+
+// Implement a general-purpose Try function to catch exceptions.
+
+def Try[A](a: => A): Either[Exception, A] =
+  try Right(a)
+  catch { case e: Exception => Left(e) }
+
+assert(Try(2 / 1) == Right(2))
+assert(Try(2 / 0) match {
+  case Left(e) => e.isInstanceOf[java.lang.ArithmeticException]
+  case _ => false
+})
+
+println("All tests passed!")
