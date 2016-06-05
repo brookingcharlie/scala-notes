@@ -4,3 +4,4 @@
 * [Tail call optimisation](tailrec/)
 * [Folding](fold/)
 * [Error handling](errors/)
+* [Lazy evaluation](lazy/)
