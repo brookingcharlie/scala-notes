@@ -23,7 +23,7 @@ def onTrue(): String = {println("Evaluate onTrue"); "True!"}
 def onFalse(): String = {println("Evaluate onFalse"); "False!"}
 ```
 
-# Evaluation
+## Evaluation
 
 ```scala
 scala> ifStrict(true)(onTrue, onFalse)

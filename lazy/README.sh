@@ -15,7 +15,7 @@ echo '```scala'
 cat lazy.scala
 echo '```'
 echo
-echo '# Evaluation'
+echo '## Evaluation'
 echo
 show_expr 'ifStrict(true)(onTrue, onFalse)'
 echo
