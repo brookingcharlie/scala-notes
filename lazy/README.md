@@ -1,3 +1,8 @@
+# Scala lazy evaluation demo
+
+## Example functions
+
+```
 // Define an "if" function taking strictly-evaluated arguments.
 // Both arguments will be evaluated before being passed to the function,
 // regardless of whether their value is actually needed.
@@ -16,3 +21,32 @@ def ifLazy[A](p: Boolean)(onTrue: => A, onFalse: => A): A = if (p) onTrue else o
 
 def onTrue(): String = {println("Evaluate onTrue"); "True!"}
 def onFalse(): String = {println("Evaluate onFalse"); "False!"}
+```
+
+# Evaluation
+
+```
+scala> ifStrict(true)(onTrue, onFalse)
+Evaluate onTrue
+Evaluate onFalse
+Result: True!
+```
+
+```
+scala> ifStrict(false)(onTrue, onFalse)
+Evaluate onTrue
+Evaluate onFalse
+Result: False!
+```
+
+```
+scala> ifLazy(true)(onTrue, onFalse)
+Evaluate onTrue
+Result: True!
+```
+
+```
+scala> ifLazy(false)(onTrue, onFalse)
+Evaluate onFalse
+Result: False!
+```
