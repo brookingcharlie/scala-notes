@@ -1,7 +1,7 @@
 #!/bin/bash
 
 show_expr() {
-  echo '```'
+  echo '```scala'
   echo 'scala>' $1
   scala -i 'lazy.scala' -e "println(\"Result: \" + $1)"
   echo '```'
@@ -11,7 +11,7 @@ echo '# Scala lazy evaluation demo'
 echo
 echo '## Example functions'
 echo
-echo '```'
+echo '```scala'
 cat lazy.scala
 echo '```'
 echo
